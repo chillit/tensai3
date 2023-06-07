@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "648049871852",
+    "project_id": "tensai3-afe03",
+    "storage_bucket": "tensai3-afe03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648049871852:android:955add1d070e6e3d9a4ec9",
+        "android_client_info": {
+          "package_name": "com.example.tensai3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648049871852-vrka1qdg6ilforqvd004d28i1n48b3c7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMUN8DZmEObpj75ExLjQGQtiZBVkTvP8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648049871852-vrka1qdg6ilforqvd004d28i1n48b3c7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
