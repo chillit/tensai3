@@ -107,7 +107,7 @@ class LoginPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 25),
-                  Field(text: "Размер годовой страховой премии,согласно ГК РК", controller: sprem, needToValidate: false,),
+                  Field(text: "размер годовой страховой премии,согласно ГК РК", controller: sprem, needToValidate: false,),
                   Field(text: "среднерыночная стоимость одного транспортного средства", controller: sts, needToValidate: false,),
                   Field(text: "срок контракта лизинга", controller: N,needToValidate: false,),
                   Field(text: "ставка лизингового процента по контракту", controller: rud,needToValidate: false,),
