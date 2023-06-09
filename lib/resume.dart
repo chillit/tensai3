@@ -1,11 +1,16 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tensai3/needs.dart';
+import 'package:tensai3/list.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class resume extends StatelessWidget {
+  final user = FirebaseAuth.instance.currentUser!;
+
+
+  resume({super.key});
   double zps = 0;
   double lgod = 0;
   double za = 0;
@@ -87,19 +92,47 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: (){
+                                FirebaseAuth.instance.signOut();
+
+                              },
+                              icon: Icon(Icons.logout)),
+                          SizedBox(width: 10,),
+                          IconButton(
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => list()),
+                              );
+
+                            },
+                            icon: Icon(Icons.history, color: Colors.black,),
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 0),
 
                   // logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: Image.asset('assets/logo.png'),
                   ),
 
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 0),
 
                   // welcome back, you've been missed!
                   Text(
-                    'Welcome back you\'ve been missed!',
+                    'Добро пожаловать, ${user.email} ',
                     style: TextStyle(
                       color: Colors.grey[700],
                       fontSize: 16,
@@ -107,38 +140,38 @@ class LoginPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 25),
-                  Field(text: "размер годовой страховой премии,согласно ГК РК", controller: sprem, needToValidate: false,),
-                  Field(text: "среднерыночная стоимость одного транспортного средства", controller: sts, needToValidate: false,),
-                  Field(text: "срок контракта лизинга", controller: N,needToValidate: false,),
-                  Field(text: "ставка лизингового процента по контракту", controller: rud,needToValidate: false,),
-                  Field(text: "размер авансового платежа по контракту лизинга (процентная ставка от стоимости транспортного средства).", controller: ats,needToValidate: false,),
-                  Field(text: "количество автобусов в день на маршруте по графику", controller: am,needToValidate: true,),
+                  Field(text: "Размер годовой страховой премии,согласно ГК РК", controller: sprem, needToValidate: false,),
+                  Field(text: "Среднерыночная стоимость одного транспортного средства", controller: sts, needToValidate: false,),
+                  Field(text: "Срок контракта лизинга", controller: N,needToValidate: false,),
+                  Field(text: "Ставка лизингового процента по контракту", controller: rud,needToValidate: false,),
+                  Field(text: "Размер авансового платежа по контракту лизинга (процентная ставка от стоимости транспортного средства).", controller: ats,needToValidate: false,),
+                  Field(text: "Количество автобусов в день на маршруте по графику", controller: am,needToValidate: true,),
                   Field(text: "Норма амортизации по автотранспорту в размере 15%", controller: pr015,needToValidate: true,),
                   Field(text: "Стоимость 1 автобуса из закрепленных на маршруте, в тенге", controller: ts,needToValidate: true,),
-                  Field(text: "коэф. резерва автобуса принимаемый на уровне 1,2", controller: kr,needToValidate: true,),
-                  Field(text: "базовая норма расхода топлива на 100 км (ПП РК от 11.08.2009 г.№1210)", controller: nt,needToValidate: true,),
-                  Field(text: "совокупный коэффициент надбавок к базавой норме для реальных условий работы автобусов на маршруте, определяется в соответствии с Нормами расхода топлива.", controller: kn,needToValidate: true,),
-                  Field(text: "средняя годовая розничная стоимость 1 литра топлива в тенге с НДС на дату расчета тарифа с учетом использования летнего и зимнего видов топлива( Цт=Цз.т.*7+Цл.т.*5/12) фор (6)  (260*7+345*5/12)", controller: tst,needToValidate: true,),
-                  Field(text: "пересчет расхода топлива со 100 км на 1 км", controller: pr001,needToValidate: true,),
-                  Field(text: "ежедневное количество кругорейсов на маршруте ( 8,2 кругов * 10 машин)", controller: n,needToValidate: true,),
-                  Field(text: "протяженность кругорейса на маршруте в км ", controller: lkr,needToValidate: true,),
-                  Field(text: "ежедневный нулевой пробег, км (15 км* 10 машин) ", controller: lo,needToValidate: true,),
-                  Field(text: "расходы на смазочные - 10% от стоимости диз.топлива", controller: pr01,needToValidate: true,),
-                  Field(text: "расходы на проведение ремонтов и Т/О автобусов принимаются как 20% от стоимости авто", controller: krt,needToValidate: true,),
-                  Field(text: "закупочная цена одного комплекта шин (шина, камера,ободная лента) в тенге на момент расчета.с  НДС", controller: tssh,needToValidate: true,),
-                  Field(text: "количество колес на автобусе (без запасного колеса)", controller: m,needToValidate: true,),
-                  Field(text: "эксплуатационная норма пробега автошины, определяется в соответствии с Нормами расхода топлива, в км", controller: sh,needToValidate: true,),
-                  Field(text: "коэффициент корректировки эксплуатационных норм пробега автошин, определяется в соответствии с Нормами расходатоплива;", controller: ksh,needToValidate: true,),
-                  Field(text: "количество месяцев обслуживания маршрута в году", controller: mp,needToValidate: true,),
-                  Field(text: "месячная зарплата водителя", controller: zb,needToValidate: true,),
-                  Field(text: "количество водителей", controller: nb,needToValidate: true,),
-                  Field(text: "месячная зарплата кондуктора", controller: zk,needToValidate: true,),
-                  Field(text: "количество кондукторов", controller: nk,needToValidate: true,),
-                  Field(text: "коэфициент учитывающий соц.налог составляет 12,5%", controller: k,needToValidate: true,),
-                  Field(text: "поправочный кооф., учит.начисл.работников", controller: koof12,needToValidate: true,),
-                  Field(text: "накладные расходы не должны превышат 20% от прямых расходов", controller: pr02,needToValidate: true,),
-                  Field(text: "коэффициент расчетной рентабельности к затратам перевозчика (принимается как 15%)", controller: r,needToValidate: true,),
-                  Field(text: "коэффициент налога на добавленную стоимость равный 1, (принимается как 12%)", controller: knds,needToValidate: true,),
+                  Field(text: "Коэф. резерва автобуса принимаемый на уровне 1,2", controller: kr,needToValidate: true,),
+                  Field(text: "Базовая норма расхода топлива на 100 км (ПП РК от 11.08.2009 г.№1210)", controller: nt,needToValidate: true,),
+                  Field(text: "Совокупный коэффициент надбавок к базавой норме для реальных условий работы автобусов на маршруте, определяется в соответствии с Нормами расхода топлива.", controller: kn,needToValidate: true,),
+                  Field(text: "Средняя годовая розничная стоимость 1 литра топлива в тенге с НДС на дату расчета тарифа с учетом использования летнего и зимнего видов топлива( Цт=Цз.т.*7+Цл.т.*5/12) фор (6)  (260*7+345*5/12)", controller: tst,needToValidate: true,),
+                  Field(text: "Пересчет расхода топлива со 100 км на 1 км", controller: pr001,needToValidate: true,),
+                  Field(text: "Ежедневное количество кругорейсов на маршруте ( 8,2 кругов * 10 машин)", controller: n,needToValidate: true,),
+                  Field(text: "Протяженность кругорейса на маршруте в км ", controller: lkr,needToValidate: true,),
+                  Field(text: "Ежедневный нулевой пробег, км (15 км* 10 машин) ", controller: lo,needToValidate: true,),
+                  Field(text: "Расходы на смазочные - 10% от стоимости диз.топлива", controller: pr01,needToValidate: true,),
+                  Field(text: "Расходы на проведение ремонтов и Т/О автобусов принимаются как 20% от стоимости авто", controller: krt,needToValidate: true,),
+                  Field(text: "Закупочная цена одного комплекта шин (шина, камера,ободная лента) в тенге на момент расчета.с  НДС", controller: tssh,needToValidate: true,),
+                  Field(text: "Количество колес на автобусе (без запасного колеса)", controller: m,needToValidate: true,),
+                  Field(text: "Эксплуатационная норма пробега автошины, определяется в соответствии с Нормами расхода топлива, в км", controller: sh,needToValidate: true,),
+                  Field(text: "Коэффициент корректировки эксплуатационных норм пробега автошин, определяется в соответствии с Нормами расходатоплива;", controller: ksh,needToValidate: true,),
+                  Field(text: "Количество месяцев обслуживания маршрута в году", controller: mp,needToValidate: true,),
+                  Field(text: "Месячная зарплата водителя", controller: zb,needToValidate: true,),
+                  Field(text: "Количество водителей", controller: nb,needToValidate: true,),
+                  Field(text: "Месячная зарплата кондуктора", controller: zk,needToValidate: true,),
+                  Field(text: "Количество кондукторов", controller: nk,needToValidate: true,),
+                  Field(text: "Коэфициент учитывающий соц.налог составляет 12,5%", controller: k,needToValidate: true,),
+                  Field(text: "Поправочный кооф., учит.начисл.работников", controller: koof12,needToValidate: true,),
+                  Field(text: "Накладные расходы не должны превышат 20% от прямых расходов", controller: pr02,needToValidate: true,),
+                  Field(text: "Коэффициент расчетной рентабельности к затратам перевозчика (принимается как 15%)", controller: r,needToValidate: true,),
+                  Field(text: "Коэффициент налога на добавленную стоимость равный 1, (принимается как 12%)", controller: knds,needToValidate: true,),
 
                   // sign in button
                   MyButton(
