@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
 
               // welcome back, you've been missed!
               Text(
-                'Welcome back you\'ve been missed!',
+                'Добро пожаловать!',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 16,
@@ -110,7 +110,8 @@ class _LoginPageState extends State<LoginPage> {
               // sign in button
               MyButton1(
                 onTap: signUserIn,
-
+                isActive: true,
+                text: 'Войти',
               ),
 
               const SizedBox(height: 50),

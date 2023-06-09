@@ -11,29 +11,54 @@ import 'package:intl/intl.dart';
 import 'package:tensai3/needs.dart';
 import 'package:tensai3/list.dart';
 
-class resume extends StatelessWidget {
-  final user = FirebaseAuth.instance.currentUser!;
-  late Exl.Excel excel;
+class resume extends StatefulWidget {
 
   resume({super.key});
+
+  @override
+  State<resume> createState() => _resumeState();
+}
+
+class _resumeState extends State<resume> {
+  final user = FirebaseAuth.instance.currentUser!;
+
+  late Exl.Excel excel;
+
+  String eName = '';
+
+  bool isActive = false;
+
   double zps = 0;
+
   double lgod = 0;
+
   double za = 0;
+
   double zt = 0;
+
   double lob = 0;
+
   double zsm = 0;
+
   double zrt = 0;
+
   double zsh = 0;
+
   double zzp = 0;
+
   double zn = 0;
+
   double zp = 0;
+
   double sm = 0;
+
   Future<void> addSto() async {
     FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage.ref().child("files/lol.xlsx");
-    File eFile = MemoryFileSystem().file('lol.xlsx')..writeAsBytesSync(excel.encode()!);
-    UploadTask uploadTask = ref.putData(await eFile.readAsBytes());
+    Reference ref = storage.ref().child("files/$eName");
+    File eFile = MemoryFileSystem().file('$eName')..writeAsBytesSync(excel.encode()!);
+    ref.putData(await eFile.readAsBytes());
   }
+
   calc() async {
     if (_formKey.currentState!.validate()) {
       za = 0.15 *
@@ -470,9 +495,12 @@ class resume extends StatelessWidget {
       // ByteData data = await rootBundle.load('sheet_template.xlsx');
       // var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
       // var excel = Excel.decodeBytes(bytes);
-      excel.save(fileName: '${(DateFormat('dd.MM.yy').format(DateTime.now()))}.xlsx');
+      eName = '${(DateFormat('dd.MM.yy').format(DateTime.now()))}.xlsx';
+      excel.save(fileName: eName);
+      setState(() {
+        isActive = true;
+      });
     }
-    addSto();
   }
 
   table({
@@ -591,40 +619,68 @@ class resume extends StatelessWidget {
     }
   }
 
-
   // text editing controllers
   final busNum = TextEditingController();
+
   final sprem = TextEditingController();
+
   final sts = TextEditingController();
+
   final N = TextEditingController();
+
   final rud = TextEditingController();
+
   final ats = TextEditingController();
+
   final am = TextEditingController();
+
   final ts = TextEditingController();
+
   final kr = TextEditingController();
+
   final nt = TextEditingController();
+
   final kn = TextEditingController();
+
   final tst = TextEditingController();
+
   final n = TextEditingController();
+
   final lkr = TextEditingController();
+
   final lo = TextEditingController();
+
   final krt = TextEditingController();
+
   final tssh = TextEditingController();
+
   final m = TextEditingController();
+
   final sh = TextEditingController();
+
   final ksh = TextEditingController();
+
   final mp = TextEditingController();
+
   final zb = TextEditingController();
+
   final nb = TextEditingController();
+
   final zk = TextEditingController();
+
   final nk = TextEditingController();
+
   final k = TextEditingController();
+
   final r = TextEditingController();
+
   final knds = TextEditingController();
 
   // sign user in method
   void signUserIn() {}
+
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -668,10 +724,7 @@ class resume extends StatelessWidget {
                   const SizedBox(height: 0),
 
                   // logo
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    child: Image.asset('assets/logo.png'),
-                  ),
+                  Icon(Icons.directions_bus_rounded, size:200),
 
                   const SizedBox(height: 0),
 
@@ -867,9 +920,16 @@ class resume extends StatelessWidget {
                   SizedBox(height: 10,),
 
                   // sign in button
-                  MyButton(
-                    onTap: calc,
-                    formKey: _formKey,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyButton(
+                        onTap: calc,
+                        formKey: _formKey,
+                      ),
+                      SizedBox(width: 20,),
+                      MyButton1(onTap: addSto, text: 'Добавить в историю', isActive: isActive)
+                    ],
                   ),
                   SizedBox(height: 20,),
 
