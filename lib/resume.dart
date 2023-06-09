@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:file/memory.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:excel/excel.dart' as Exl;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +13,7 @@ import 'package:tensai3/list.dart';
 
 class resume extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
-
+  late Exl.Excel excel;
 
   resume({super.key});
   double zps = 0;
@@ -26,6 +28,11 @@ class resume extends StatelessWidget {
   double zn = 0;
   double zp = 0;
   double sm = 0;
+  Future<void> addSto() async {
+    final ref = FirebaseStorage.instance.ref("files/lol.xlsx");
+    File eFile = MemoryFileSystem().file('lol.xlsx')..writeAsBytesSync(excel.encode()!);
+    await ref.putFile(File("assets/lol.xlsx"));
+  }
   calc() async {
     if (_formKey.currentState!.validate()) {
       za = 0.15 *
@@ -77,7 +84,7 @@ class resume extends StatelessWidget {
 
       //Creating EXCEL
 
-      var excel = Exl.Excel.createExcel();
+      excel = Exl.Excel.createExcel();
       excel.rename('Sheet1', busNum.text.toString());
       Exl.Sheet sheet = excel[busNum.text.toString()];
       sheet.setColWidth(1, 80);
@@ -464,6 +471,7 @@ class resume extends StatelessWidget {
       // var excel = Excel.decodeBytes(bytes);
       excel.save(fileName: '${(DateFormat('dd.MM.yy').format(DateTime.now()))}.xlsx');
     }
+    addSto();
   }
 
   table({
@@ -581,6 +589,7 @@ class resume extends StatelessWidget {
       startrow++;
     }
   }
+
 
   // text editing controllers
   final busNum = TextEditingController();
