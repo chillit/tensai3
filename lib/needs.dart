@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
         ),
         child: const Center(
           child: Text(
-            "Sign In",
+            "Вычислить",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class MyTextField extends StatelessWidget {
       child: TextFormField(
         validator: needToValidate ? (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter some text';
+            return 'Вы не ввели данные!';
           }
           return null;
         } : null,
