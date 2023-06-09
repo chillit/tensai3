@@ -29,9 +29,10 @@ class resume extends StatelessWidget {
   double zp = 0;
   double sm = 0;
   Future<void> addSto() async {
-    final ref = FirebaseStorage.instance.ref("files/lol.xlsx");
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child("files/lol.xlsx");
     File eFile = MemoryFileSystem().file('lol.xlsx')..writeAsBytesSync(excel.encode()!);
-    await ref.putFile(File("assets/lol.xlsx"));
+    UploadTask uploadTask = ref.putData(await eFile.readAsBytes());
   }
   calc() async {
     if (_formKey.currentState!.validate()) {
@@ -690,34 +691,34 @@ class resume extends StatelessWidget {
                     needToValidate: true,
                   ),
                   Field(
-                    text: "размер годовой страховой премии,согласно ГК РК",
+                    text: "Размер годовой страховой премии,согласно ГК РК",
                     controller: sprem,
                     needToValidate: false,
                   ),
                   Field(
                     text:
-                        "среднерыночная стоимость одного транспортного средства",
+                        "Среднерыночная стоимость одного транспортного средства",
                     controller: sts,
                     needToValidate: false,
                   ),
                   Field(
-                    text: "срок контракта лизинга",
+                    text: "Срок контракта лизинга",
                     controller: N,
                     needToValidate: false,
                   ),
                   Field(
-                    text: "ставка лизингового процента по контракту",
+                    text: "Ставка лизингового процента по контракту",
                     controller: rud,
                     needToValidate: false,
                   ),
                   Field(
                     text:
-                        "размер авансового платежа по контракту лизинга (процентная ставка от стоимости транспортного средства).",
+                        "Размер авансового платежа по контракту лизинга (процентная ставка от стоимости транспортного средства).",
                     controller: ats,
                     needToValidate: false,
                   ),
                   Field(
-                    text: "количество автобусов в день на маршруте по графику",
+                    text: "Количество автобусов в день на маршруте по графику",
                     controller: am,
                     needToValidate: true,
                   ),
@@ -733,25 +734,25 @@ class resume extends StatelessWidget {
                     needToValidate: true,
                   ),
                   Field(
-                    text: "коэф. резерва автобуса принимаемый на уровне 1,2",
+                    text: "Коэф. резерва автобуса принимаемый на уровне 1,2",
                     controller: kr,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "базовая норма расхода топлива на 100 км (ПП РК от 11.08.2009 г.№1210)",
+                        "Базовая норма расхода топлива на 100 км (ПП РК от 11.08.2009 г.№1210)",
                     controller: nt,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "совокупный коэффициент надбавок к базавой норме для реальных условий работы автобусов на маршруте, определяется в соответствии с Нормами расхода топлива.",
+                        "Совокупный коэффициент надбавок к базавой норме для реальных условий работы автобусов на маршруте, определяется в соответствии с Нормами расхода топлива.",
                     controller: kn,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "средняя годовая розничная стоимость 1 литра топлива в тенге с НДС на дату расчета тарифа с учетом использования летнего и зимнего видов топлива( Цт=Цз.т.*7+Цл.т.*5/12) фор (6)  (260*7+345*5/12)",
+                        "Средняя годовая розничная стоимость 1 литра топлива в тенге с НДС на дату расчета тарифа с учетом использования летнего и зимнего видов топлива( Цт=Цз.т.*7+Цл.т.*5/12) фор (6)  (260*7+345*5/12)",
                     controller: tst,
                     needToValidate: true,
                   ),
@@ -762,17 +763,17 @@ class resume extends StatelessWidget {
                   ),*/
                   Field(
                     text:
-                        "ежедневное количество кругорейсов на маршруте ( 8,2 кругов * 10 машин)",
+                        "Ежедневное количество кругорейсов на маршруте ( 8,2 кругов * 10 машин)",
                     controller: n,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "протяженность кругорейса на маршруте в км ",
+                    text: "Протяженность кругорейса на маршруте в км ",
                     controller: lkr,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "ежедневный нулевой пробег, км (15 км* 10 машин) ",
+                    text: "Ежедневный нулевой пробег, км (15 км* 10 машин) ",
                     controller: lo,
                     needToValidate: true,
                   ),
@@ -783,60 +784,60 @@ class resume extends StatelessWidget {
                   ),*/
                   Field(
                     text:
-                        "расходы на проведение ремонтов и Т/О автобусов принимаются как 20% от стоимости авто",
+                        "Расходы на проведение ремонтов и Т/О автобусов принимаются как 20% от стоимости авто",
                     controller: krt,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "закупочная цена одного комплекта шин (шина, камера,ободная лента) в тенге на момент расчета.с  НДС",
+                        "Закупочная цена одного комплекта шин (шина, камера,ободная лента) в тенге на момент расчета.с  НДС",
                     controller: tssh,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "количество колес на автобусе (без запасного колеса)",
+                    text: "Количество колес на автобусе (без запасного колеса)",
                     controller: m,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "эксплуатационная норма пробега автошины, определяется в соответствии с Нормами расхода топлива, в км",
+                        "Эксплуатационная норма пробега автошины, определяется в соответствии с Нормами расхода топлива, в км",
                     controller: sh,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "коэффициент корректировки эксплуатационных норм пробега автошин, определяется в соответствии с Нормами расходатоплива;",
+                        "Коэффициент корректировки эксплуатационных норм пробега автошин, определяется в соответствии с Нормами расходатоплива;",
                     controller: ksh,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "количество месяцев обслуживания маршрута в году",
+                    text: "Количество месяцев обслуживания маршрута в году",
                     controller: mp,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "месячная зарплата водителя",
+                    text: "Месячная зарплата водителя",
                     controller: zb,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "количество водителей",
+                    text: "Количество водителей",
                     controller: nb,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "месячная зарплата кондуктора",
+                    text: "Месячная зарплата кондуктора",
                     controller: zk,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "количество кондукторов",
+                    text: "Количество кондукторов",
                     controller: nk,
                     needToValidate: true,
                   ),
                   Field(
-                    text: "коэфициент учитывающий соц.налог составляет 12,5%",
+                    text: "Коэфициент учитывающий соц.налог составляет 12,5%",
                     controller: k,
                     needToValidate: true,
                   ),
@@ -853,22 +854,24 @@ class resume extends StatelessWidget {
                   ),*/
                   Field(
                     text:
-                        "коэффициент расчетной рентабельности к затратам перевозчика (принимается как 15%)",
+                        "Коэффициент расчетной рентабельности к затратам перевозчика (принимается как 15%)",
                     controller: r,
                     needToValidate: true,
                   ),
                   Field(
                     text:
-                        "коэффициент налога на добавленную стоимость равный 1, (принимается как 12%)",
+                        "Коэффициент налога на добавленную стоимость равный 1, (принимается как 12%)",
                     controller: knds,
                     needToValidate: true,
                   ),
+                  SizedBox(height: 10,),
 
                   // sign in button
                   MyButton(
                     onTap: calc,
                     formKey: _formKey,
                   ),
+                  SizedBox(height: 20,),
 
                   // not a member? register now
                 ],
