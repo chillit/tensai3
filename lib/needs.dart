@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  const MyButton({super.key, required this.formKey});
+  const MyButton({super.key, required this.formKey, required this.onTap});
   final formKey;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        if (formKey.currentState!.validate()) {
-          // If the form is valid, display a snackbar. In the real world,
-          // you'd often call a server or save the information in a database.
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Processing Data')),
-          );
-        }
+        onTap();
       },
       child: Container(
         padding: const EdgeInsets.all(25),

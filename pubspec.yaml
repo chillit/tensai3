@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^11.2.2
   url_launcher: ^6.1.11
   universal_html: any
+  excel: ^2.1.0
 
 dev_dependencies:
   flutter_test:
